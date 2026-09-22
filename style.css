@@ -541,8 +541,8 @@ body {
   justify-content: center;
   height: 54px;
   flex: 1;
-  max-width: 42px;
-  min-width: 28px;
+  max-width: 40px;
+  min-width: 26px;
   background: var(--surface-2);
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
