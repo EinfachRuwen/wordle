@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wordle – Eigenes Wort</title>
+  <meta name="description" content="Erstelle dein eigenes Wordle-Rätsel und fordere Freunde heraus – mit AES-256-verschlüsseltem Link oder direkt am gleichen Gerät.">
+  <meta name="theme-color" content="#0f0f11">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Wordle – Eigenes Wort">
+  <meta property="og:description" content="Erstelle dein eigenes Wordle-Rätsel mit verschlüsseltem Link!">
+  <meta property="og:type" content="website">
+  <!-- Fonts (preconnect for speed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Toast notification -->
+  <div id="toast" role="status" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- ============================================================
+       VIEW: HOME  –  Wort eingeben & Modus wählen
+       ============================================================ -->
+  <div id="view-home" class="view">
+
+    <header class="home-header">
+      <!-- Animated logo -->
+      <div class="logo" aria-label="WORDLE">
+        <span class="logo-tile" data-c="g">W</span>
+        <span class="logo-tile" data-c="y">O</span>
+        <span class="logo-tile">R</span>
+        <span class="logo-tile" data-c="g">D</span>
+        <span class="logo-tile" data-c="y">L</span>
+        <span class="logo-tile">E</span>
+      </div>
+      <p class="home-tagline">Erstelle dein eigenes Rätsel</p>
+    </header>
+
+    <main class="home-main">
+
+      <!-- Word input -->
+      <div class="field-group">
+        <label for="word-input">Dein geheimes Wort</label>
+        <div class="field-wrap">
+          <input
+            id="word-input"
+            type="text"
+            placeholder="2 – 10 Buchstaben…"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            maxlength="10"
+            aria-describedby="char-count field-hint"
+          >
+          <span id="char-count" aria-live="polite">0/10</span>
+        </div>
+        <p id="field-hint" class="field-hint">Buchstaben inkl. Ä, Ö, Ü erlaubt</p>
+      </div>
+
+      <!-- Mode selection -->
+      <div class="mode-grid" role="group" aria-label="Spielmodus wählen">
+        <button id="btn-pass" class="mode-card" disabled aria-label="Gleiches Gerät: Gerät weitergeben und erraten lassen">
+          <span class="mc-icon" aria-hidden="true">📱</span>
+          <span class="mc-title">Gleiches Gerät</span>
+          <span class="mc-desc">Gerät weitergeben &amp; erraten lassen</span>
+        </button>
+        <button id="btn-link" class="mode-card" disabled aria-label="Link erstellen: Verschlüsselten Link teilen">
+          <span class="mc-icon" aria-hidden="true">🔗</span>
+          <span class="mc-title">Link erstellen</span>
+          <span class="mc-desc">Verschlüsselten Link teilen</span>
+        </button>
+      </div>
+
+      <!-- Generated link box (hidden by default) -->
+      <div id="link-box" class="link-box hidden" aria-live="polite">
+        <span class="link-badge">🔒 AES-256 verschlüsselt</span>
+        <div class="link-row">
+          <input
+            id="link-url"
+            type="text"
+            readonly
+            aria-label="Geteilter Link – zum Kopieren auswählen"
+          >
+          <button id="btn-copy-link" class="btn-copy">Kopieren</button>
+        </div>
+        <p class="link-note">
+          Das Wort ist im URL-Fragment <code>#…</code> versteckt und wird
+          <strong>nie</strong> an den Server gesendet.
+        </p>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================
+       VIEW: PASS SCREEN  –  Gerät weitergeben
+       ============================================================ -->
+  <div id="view-pass" class="view">
+    <div class="pass-wrap">
+      <div class="pass-icon" aria-hidden="true">📱</div>
+      <h1>Gerät weitergeben!</h1>
+      <p>
+        Übergib das Gerät an die Person, die raten soll.
+        Das Wort ist gespeichert und <strong>wird nicht angezeigt</strong>.
+      </p>
+      <button id="btn-ready" class="btn-cta">
+        🎮 Ich bin bereit – Los!
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       VIEW: GAME  –  Spielfeld
+       ============================================================ -->
+  <div id="view-game" class="view">
+
+    <header class="game-header">
+      <button id="btn-back" class="icon-btn" aria-label="Spiel abbrechen und zur Startseite">
+        ←
+      </button>
+      <h1 class="game-title">WORDLE</h1>
+      <div class="header-spacer" aria-hidden="true"></div>
+    </header>
+
+    <div id="grid" role="grid" aria-label="Buchstabengitter"></div>
+    <div id="keyboard" role="group" aria-label="Virtuelle Tastatur"></div>
+
+  </div>
+
+  <!-- ============================================================
+       VIEW: RESULT  –  Ergebnis
+       ============================================================ -->
+  <div id="view-result" class="view">
+
+    <!-- Confetti container (only shown on win) -->
+    <div id="confetti" aria-hidden="true"></div>
+
+    <div class="result-wrap">
+      <div id="result-icon"  class="result-icon"  aria-hidden="true"></div>
+      <p   id="result-msg"   class="result-msg"></p>
+
+      <div class="result-card">
+        <span class="result-label">Das Wort war</span>
+        <span id="result-word"  class="result-word"></span>
+        <span id="result-tries" class="result-tries"></span>
+      </div>
+
+      <pre id="result-emoji" class="result-emoji" aria-label="Ergebnis als Emoji-Raster"></pre>
+
+      <div class="result-actions">
+        <button id="btn-share"    class="btn-outline">📤 Teilen</button>
+        <button id="btn-new-game" class="btn-cta">🎮 Neues Spiel</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
