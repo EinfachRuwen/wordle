@@ -131,7 +131,7 @@ function handleKey(k) {
   if (S.gameOver || S.animating) return;
   if (k === 'ENTER' || k === '↵')          submitGuess();
   else if (k === 'BACKSPACE' || k === '⌫') deleteLetter();
-  else if (/^[A-ZÄÖÜ]$/.test(k))           addLetter(k);
+  else if (/^[A-ZÄÖÜ0-9]$/.test(k))        addLetter(k);
 }
 
 function getTile(row, col) {
@@ -290,6 +290,7 @@ function renderGrid() {
    KEYBOARD RENDERING
    ---------------------------------------------------------------- */
 const KB_ROWS = [
+  ['1','2','3','4','5','6','7','8','9','0'],
   ['Q','W','E','R','T','Z','U','I','O','P','Ü'],
   ['A','S','D','F','G','H','J','K','L','Ö','Ä'],
   ['⌫','Y','X','C','V','B','N','M','↵'],
@@ -427,7 +428,7 @@ function setupHome() {
   // Filter to letters + umlauts only, uppercase
   input.addEventListener('input', () => {
     input.value = input.value
-      .replace(/[^a-zA-ZäöüÄÖÜ]/g, '')
+      .replace(/[^a-zA-ZäöüÄÖÜ0-9]/g, '')
       .slice(0, 10)
       .toUpperCase();
     validate();
@@ -576,7 +577,7 @@ async function init() {
   // Check if URL contains an encrypted word
   const word = await getWordFromURL();
 
-  if (word && /^[A-ZÄÖÜ]{2,10}$/.test(word)) {
+  if (word && /^[A-ZÄÖÜ0-9]{2,10}$/.test(word)) {
     // Valid encrypted game link
     S.word       = word;
     S.wordLength = word.length;
