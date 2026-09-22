@@ -752,3 +752,66 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, .tile, .row, .logo-tile { animation: none !important; transition: none !important; }
 }
+
+/* =====================================================
+   CLASSIC WORDLE CARD  +  DIVIDER
+   ===================================================== */
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-dim);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  width: 100%;
+}
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.classic-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  padding: 18px 20px;
+  text-align: left;
+  transition: border-color .2s, background .2s, transform .2s, box-shadow .2s;
+}
+.classic-card:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow);
+  transform: translateY(-2px);
+}
+.classic-card:active { transform: translateY(0); }
+
+.cc-icon  { font-size: 32px; flex-shrink: 0; }
+
+.cc-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cc-title { font-size: 15px; font-weight: 700; }
+.cc-desc  { font-size: 12px; color: var(--text-muted); }
+
+.cc-arrow {
+  font-size: 20px;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.classic-card:hover .cc-arrow { transform: translateX(4px); }
