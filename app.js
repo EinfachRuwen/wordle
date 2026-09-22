@@ -15,9 +15,44 @@ const S = {
   letterMap:  {},     // letter -> 'correct' | 'present' | 'absent'
   gameOver:   false,
   won:        false,
-  mode:       null,   // 'pass' | 'link'
+  mode:       null,   // 'pass' | 'link' | 'classic'
   animating:  false,
 };
+
+/* ----------------------------------------------------------------
+   WORD LIST  (deutsche 5-Buchstaben-Wörter)
+   ---------------------------------------------------------------- */
+const WORD_LIST = [
+  'ABEND','ACHSE','ADLER','AHORN','AMSEL','ANGEL','ANKER','APFEL','ARCHE','ASCHE',
+  'ATLAS','BAUCH','BEERE','BIRNE','BLATT','BLUME','BOHNE','BRAUN','BREIT','BRIEF',
+  'BRISE','BRUST','BUCHT','BUCHE','DACHS','DECKE','DOLCH','DRUCK','DUNST','DURCH',
+  'EBENE','EICHE','ENGEL','ERBSE','ERNTE','FADEN','FALKE','FARBE','FAUST','FEIND',
+  'FEUER','FISCH','FLUSS','FORST','FROST','FUCHS','GABEL','GASSE','GEIST','GLEIS',
+  'GNADE','GRIFF','GRUBE','GRUND','HAFEN','HAKEN','HARTE','HAUCH','HAUPT','HECKE',
+  'HEIDE','HERDE','HIRSE','HUNDE','INSEL','JACHT','KANAL','KAMIN','KATZE','KERZE',
+  'KETTE','KLANG','KLEID','KNABE','KNALL','KNOPF','KRAFT','KREIS','KREUZ','KRONE',
+  'KURVE','LAMPE','LAUBE','LAUCH','LEBEN','LEHRE','LESER','LICHT','LINIE','LINKS',
+  'LINSE','LIPPE','LISTE','LITER','LUNGE','MAGEN','MACHT','MALER','MARKT','MASKE',
+  'MATTE','MAUER','MEISE','MILCH','MITTE','MONAT','MORAL','MOTTE','MULDE','MUSIK',
+  'NACHT','NADEL','NAGEL','NEBEL','NELKE','NIERE','NONNE','OSTEN','OTTER','OPFER',
+  'PAPPE','PERLE','PFEIL','PFERD','PHASE','PILOT','PIZZA','PILZE','PLANE','PLATZ',
+  'POKAL','PROBE','PUMPE','PUPPE','RADIO','RASEN','RATTE','RAUCH','REBEN','RECHT',
+  'REGEN','REIFE','REISE','REIHE','RIPPE','RINDE','ROBBE','RUDER','RUINE','SACHE',
+  'SAITE','SALAT','SALBE','SAMEN','SCHAL','SCHAF','SCHUH','SEIFE','SEITE','SEGEL',
+  'SENSE','SIEGE','SIPPE','SIRUP','SKALA','SOCKE','SOHLE','SORTE','SPEER','SPIEL',
+  'SPORT','SPOTT','SPULE','STAHL','STALL','STAMM','STERN','STICH','STIFT','STOCK',
+  'STOLZ','STOFF','STROM','STROH','STUFE','STUHL','STURM','SUCHT','SUMME','SUPPE',
+  'SZENE','TANTE','TASTE','TAUBE','TEMPO','TIGER','TINTE','TISCH','TORTE','TOTAL',
+  'TRAUM','TREND','TREFF','TROST','TREUE','TRUNK','TUMOR','TURBO','TYPEN','UNRAT',
+  'UNTER','VATER','VIELE','VIPER','VIRUS','VOGEL','WACHT','WAGEN','WANGE','WANNE',
+  'WARZE','WEIDE','WEISE','WELLE','WESTE','WIESE','WINDE','WOLKE','WOLLE','WOGEN',
+  'WUNDE','YACHT','ZANGE','ZELLE','ZEUGE','ZIEGE','ZINNE','ZINKE','ZUCHT','ZUTAT',
+  'ZWECK','ZWERG','MÖHRE','NÜSSE','TÜRME','GLÜCK','ÜBUNG','KÄFER','LÖWEN',
+];
+
+function getRandomWord() {
+  return WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+}
 
 /* ----------------------------------------------------------------
    CRYPTO  (AES-GCM via Web Crypto API)
@@ -375,6 +410,14 @@ function buildResult() {
   }
   document.getElementById('result-emoji').textContent = rows.join('\n');
 
+  // Button-Label je nach Modus anpassen
+  const btnNew = document.getElementById('btn-new-game');
+  if (S.mode === 'classic') {
+    btnNew.textContent = '🎲 Nächstes Wort';
+  } else {
+    btnNew.textContent = '🎮 Neues Spiel';
+  }
+
   if (won) spawnConfetti();
 }
 
@@ -496,6 +539,11 @@ function setupHome() {
   });
 
   linkUrl.addEventListener('click', () => linkUrl.select());
+
+  // ---- Classic Wordle ----
+  document.getElementById('btn-classic').addEventListener('click', () => {
+    startClassicGame();
+  });
 }
 
 /* ----------------------------------------------------------------
@@ -544,12 +592,30 @@ function setupResult() {
   });
 
   document.getElementById('btn-new-game').addEventListener('click', () => {
-    if (S.mode === 'link') history.replaceState(null, '', location.pathname);
-    S.word = '';
-    S.mode = null;
     document.getElementById('confetti').innerHTML = '';
-    showView('home');
+    if (S.mode === 'classic') {
+      // Direkt nächstes Wort laden – kein Umweg über Home
+      startClassicGame();
+    } else {
+      if (S.mode === 'link') history.replaceState(null, '', location.pathname);
+      S.word = '';
+      S.mode = null;
+      showView('home');
+    }
   });
+}
+
+/* ----------------------------------------------------------------
+   CLASSIC MODE
+   ---------------------------------------------------------------- */
+function startClassicGame() {
+  S.word       = getRandomWord();
+  S.wordLength = S.word.length; // immer 5
+  S.mode       = 'classic';
+  initBoard();
+  renderGrid();
+  renderKeyboard();
+  showView('game');
 }
 
 /* ----------------------------------------------------------------
