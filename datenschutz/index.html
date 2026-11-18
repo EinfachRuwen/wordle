@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutz – Wordle – Eigenes Wort</title>
+  <meta name="description" content="Datenschutzerklärung für Wordle – Eigenes Wort.">
+  <meta name="author" content="Ruwen Hohnholz">
+  <meta name="theme-color" content="#0f0f11">
+  <!-- Schrift Inter, lokal gehostet (fonts/, SIL OFL 1.1) -->
+  <link href="/fonts.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="legal-body">
+<div class="legal-page">
+
+  <header class="legal-head">
+    <a class="logo" href="/" aria-label="Zurück zum Spiel">
+      <span class="logo-tile" data-c="g">W</span>
+      <span class="logo-tile" data-c="y">O</span>
+      <span class="logo-tile">R</span>
+      <span class="logo-tile" data-c="g">D</span>
+      <span class="logo-tile" data-c="y">L</span>
+      <span class="logo-tile">E</span>
+    </a>
+  </header>
+
+  <main class="legal-doc" id="inhalt">
+    <p class="kicker">Stand: 18. November 2026</p>
+    <h1>Datenschutz&shy;erklärung</h1>
+    <p class="lede">Dieses Spiel läuft vollständig in deinem Browser. Es setzt keine Cookies, speichert nichts auf deinem Gerät, misst keine Besuche und lädt nichts von fremden Servern. Trotzdem fallen beim Aufruf technische Daten an. Welche das sind, steht hier.</p>
+
+    <section aria-labelledby="s1">
+      <h2 id="s1"><span class="no">01</span>Verantwortlicher und Geltungsbereich</h2>
+      <address>
+        Ruwen Hohnholz<br>
+        c/o Autorenglück #45094<br>
+        Albert-Einstein-Str. 47<br>
+        02977 Hoyerswerda<br>
+        E-Mail: <a href="mailto:info@focusonruwen.com">info@focusonruwen.com</a>
+      </address>
+      <p>Diese Datenschutzerklärung gilt für „Wordle – Eigenes Wort“ unter wordle-kappa-puce.vercel.app, einschließlich dieser Seite. Es handelt sich um ein privates, nicht kommerzielles Projekt. Einen Datenschutzbeauftragten habe ich nicht benannt.</p>
+    </section>
+
+    <section aria-labelledby="s2">
+      <h2 id="s2"><span class="no">02</span>Hosting bei Vercel und Server-Logs</h2>
+      <p>Die Seite liegt bei Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Wenn du sie aufrufst, verarbeitet Vercel technisch notwendige Daten, um sie an deinen Browser auszuliefern und den Betrieb abzusichern:</p>
+      <ul>
+        <li>IP-Adresse und daraus abgeleitetes Land bzw. ungefährer Ort</li>
+        <li>Datum und Uhrzeit des Abrufs</li>
+        <li>aufgerufene Adresse samt Pfad und Parametern; bei einem geteilten Spiellink gehören dazu die Parameter <code>?g=</code> und <code>&amp;iv=</code> mit dem verschlüsselten Wort (siehe Abschnitt 03), nicht aber der Schlüssel</li>
+        <li>Statuscode, übertragene Datenmenge, verweisende Seite (Referrer)</li>
+        <li>Browser und Betriebssystem (User-Agent)</li>
+      </ul>
+      <p><strong>Rechtsgrundlage</strong> ist mein berechtigtes Interesse, die Seite zuverlässig und sicher auszuliefern (Art. 6 Abs. 1 lit. f DSGVO).</p>
+      <p><strong>Speicherdauer:</strong> In meinem Vercel-Konto sind Protokolle je nach Tarif nur kurz einsehbar, zwischen einer Stunde und einem Tag. Wie lange Vercel selbst Protokolle aufbewahrt, legt Vercel fest; nach eigenen Angaben nur so lange, wie es für den Betrieb, die Sicherheit und gesetzliche Pflichten nötig ist. Ich werte keine Protokolle aus und führe sie nicht mit anderen Daten zusammen.</p>
+      <p><strong>Übermittlung in die USA:</strong> Vercel kann die Daten in den USA und auf Servern weltweit verarbeiten. Vercel ist unter dem EU-US Data Privacy Framework zertifiziert; die Übermittlung stützt sich auf den Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO). Mehr dazu im <a href="https://vercel.com/legal/privacy-notice" rel="noopener">Datenschutzhinweis von Vercel</a>.</p>
+    </section>
+
+    <section aria-labelledby="s3">
+      <h2 id="s3"><span class="no">03</span>Spiellinks und Verschlüsselung</h2>
+      <p>Wenn du „Link erstellen“ wählst, verschlüsselt dein Browser dein Wort mit AES-256-GCM und einem zufällig erzeugten Schlüssel (Web Crypto API). Der Link hat dann drei Teile:</p>
+      <ul>
+        <li><code>?g=</code>: das verschlüsselte Wort</li>
+        <li><code>&amp;iv=</code>: ein zufälliger Startwert für die Verschlüsselung</li>
+        <li><code>#…</code>: der Schlüssel, im sogenannten Fragment hinter dem Rautezeichen</li>
+      </ul>
+      <p>Browser senden das Fragment nicht an den Server. Wenn jemand den Link öffnet, erhalten Vercel und ich daher nur das verschlüsselte Wort und den Startwert, die wie jede Adresse in den Server-Logs auftauchen können (Abschnitt 02). Ohne den Schlüssel lässt sich das Wort daraus nicht lesen. Erkennbar ist nur ungefähr, wie lang es ist, weil die Länge des verschlüsselten Werts von der Wortlänge abhängt. Entschlüsselt wird ausschließlich im Browser der ratenden Person. Danach entfernt die Seite den Schlüssel aus der Adresszeile.</p>
+      <p>Den Link teilst du selbst, etwa per Messenger oder E-Mail. Für diese Übertragung ist der jeweilige Dienst verantwortlich; wer den vollständigen Link samt Fragment kennt, kann das Wort lesen.</p>
+    </section>
+
+    <section aria-labelledby="s4">
+      <h2 id="s4"><span class="no">04</span>Keine Cookies, kein Speicher auf deinem Gerät</h2>
+      <p>Die Seite setzt keine Cookies und nutzt weder <code>localStorage</code> noch <code>sessionStorage</code>, IndexedDB oder einen Service Worker. Es gibt keine Anmeldung, kein Konto und keine Datenbank.</p>
+      <ul>
+        <li><strong>Wortliste:</strong> Die Wörter für das klassische Wordle stehen fest im Programmcode der Seite. Das Zufallswort wird in deinem Browser ausgewählt; dabei wird nichts übertragen.</li>
+        <li><strong>Spielstand:</strong> Dein geheimes Wort (auch im Modus „Gleiches Gerät“), deine Rateversuche und das Ergebnis existieren nur im Arbeitsspeicher des geöffneten Tabs. Beim Neuladen oder Schließen sind sie weg.</li>
+        <li><strong>Statistiken:</strong> Es werden keine Spielstatistiken, Serien oder Bestwerte gespeichert, weder lokal noch auf einem Server.</li>
+      </ul>
+      <p>Weil nichts auf deinem Gerät gespeichert oder ausgelesen wird, ist keine Einwilligung nach § 25 TDDDG nötig.</p>
+    </section>
+
+    <section aria-labelledby="s5">
+      <h2 id="s5"><span class="no">05</span>Zwischenablage</h2>
+      <p>Nur wenn du auf „Kopieren“ oder „Teilen“ tippst, schreibt die Seite den Spiellink bzw. dein Ergebnis (Anzahl der Versuche, Emoji-Raster und die Adresse der Seite, ohne das Wort) in die Zwischenablage deines Geräts. Die Seite liest die Zwischenablage nie aus und überträgt nichts davon.</p>
+    </section>
+
+    <section aria-labelledby="s6">
+      <h2 id="s6"><span class="no">06</span>Keine Statistik, keine fremden Inhalte</h2>
+      <p>Es gibt keine Reichweitenmessung, kein Tracking, keine Werbung und keine eingebetteten Inhalte Dritter. Die Schrift Inter liegt auf demselben Server wie die Seite; dein Browser stellt dafür keine Verbindung zu Google oder anderen Anbietern her.</p>
+    </section>
+
+    <section aria-labelledby="s7">
+      <h2 id="s7"><span class="no">07</span>Links zu anderen Seiten</h2>
+      <p>Die Seite verlinkt auf das Impressum (fcrw.cc, das auf focusonruwen.com weiterleitet) und auf den Datenschutzhinweis von Vercel. Erst wenn du einen Link anklickst, ruft dein Browser die Zielseite auf; dort gilt deren Datenschutzerklärung. Dein Browser übermittelt dabei in der Regel nur die Domain dieser Seite als Herkunft, nicht den Spiellink.</p>
+    </section>
+
+    <section aria-labelledby="s8">
+      <h2 id="s8"><span class="no">08</span>Kontakt per E-Mail</h2>
+      <p>Wenn du mir schreibst, verarbeite ich deine E-Mail-Adresse und deine Nachricht, um dir zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Ich lösche sie, wenn die Anfrage erledigt ist und keine Aufbewahrungsgründe bestehen.</p>
+    </section>
+
+    <section aria-labelledby="s9">
+      <h2 id="s9"><span class="no">09</span>Deine Rechte</h2>
+      <p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20). Eine formlose E-Mail an <a href="mailto:info@focusonruwen.com">info@focusonruwen.com</a> genügt.</p>
+      <div class="callout">
+        <p class="callout-label">Widerspruchsrecht nach Art. 21 DSGVO</p>
+        <p>Soweit ich Daten auf Grundlage berechtigter Interessen verarbeite (Art. 6 Abs. 1 lit. f DSGVO), kannst du dieser Verarbeitung aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen. Ich verarbeite die Daten dann nicht mehr, es sei denn, ich kann zwingende schutzwürdige Gründe nachweisen, die deine Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.</p>
+      </div>
+      <p>Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren, insbesondere in dem Mitgliedstaat deines Aufenthaltsorts, deines Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes (Art. 77 DSGVO).</p>
+    </section>
+
+    <section aria-labelledby="s10">
+      <h2 id="s10"><span class="no">10</span>Pflicht zur Bereitstellung, automatisierte Entscheidungen</h2>
+      <p>Du bist nicht verpflichtet, Daten bereitzustellen. Ohne die Übertragung deiner IP-Adresse kann dein Browser die Seite aber technisch nicht laden. Eine automatisierte Entscheidungsfindung einschließlich Profiling (Art. 22 DSGVO) findet nicht statt.</p>
+    </section>
+
+    <section aria-labelledby="s11">
+      <h2 id="s11"><span class="no">11</span>Änderungen</h2>
+      <p>Ich passe diese Erklärung an, wenn sich das Spiel oder das Hosting ändert. Es gilt die hier veröffentlichte Fassung.</p>
+    </section>
+  </main>
+
+  <nav class="legal-links" aria-label="Rechtliches">
+    <a href="/">Zum Spiel</a>
+    <a href="https://fcrw.cc/imprint">Impressum</a>
+    <a href="/datenschutz/" aria-current="page">Datenschutz</a>
+  </nav>
+
+</div>
+</body>
+</html>
